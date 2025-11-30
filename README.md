@@ -67,7 +67,7 @@ You should have received a file named `arb-bot` (Linux/Mac) or `arb-bot.exe` (Wi
 
 ### Step 2: Make it Executable (Linux/Mac only)
 ```bash
-chmod +x arb-bot
+chmod +x jupiter-arb-bot.sh
 ```
 
 ### Step 3: Run the Bot
@@ -119,7 +119,7 @@ On first run, you'll be asked to configure:
 Your settings are saved in: `config.json` (in the same folder as the bot)
 
 ### Changing Settings:
-1. Run the bot: `./arb-bot`
+1. Run the bot: `./jupiter-arb-bot.sh`
 2. Choose: `⚙️ Reconfigure Settings`
 3. Enter new values
 
@@ -153,7 +153,7 @@ Your settings are saved in: `config.json` (in the same folder as the bot)
 ### Running the Bot:
 
 ```bash
-./arb-bot
+./jupiter-arb-bot.sh
 ```
 
 Choose option 1: `🚀 Start Arbitrage Bot`
@@ -264,7 +264,7 @@ Your Balance: 0.1026 SOL (+0.0026 net profit)
 **Problem:** Permission denied
 ```bash
 # Solution:
-chmod +x arb-bot
+chmod +x jupiter-arb-bot.sh
 ```
 
 **Problem:** Node.js version error
@@ -287,7 +287,7 @@ nvm use 20
 **Solution:**
 ```bash
 # Lower minimum profit percentage
-./arb-bot → Reconfigure Settings → Min Profit: 0.5
+./jupiter-arb-bot.sh → Reconfigure Settings → Min Profit: 0.5
 ```
 
 ### Trades Failing
@@ -295,7 +295,7 @@ nvm use 20
 **Problem:** "Slippage exceeded"
 ```bash
 # Increase slippage tolerance:
-./arb-bot → Reconfigure Settings → Slippage: 100 (1.0%)
+./jupiter-arb-bot.sh → Reconfigure Settings → Slippage: 100 (1.0%)
 ```
 
 **Problem:** "Insufficient SOL balance"

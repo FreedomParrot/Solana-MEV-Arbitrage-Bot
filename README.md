@@ -72,7 +72,7 @@ chmod +x jupiter-arb-bot.sh
 
 ### Step 3: Run the Bot
 ```bash
-./arb-bot
+./jupiter-arb-bot.sh
 ```
 
 ### Step 4: First Time Setup Wizard

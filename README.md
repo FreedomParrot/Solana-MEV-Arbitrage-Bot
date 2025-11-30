@@ -1,493 +1,398 @@
-# 🚀 Solana Arbitrage Bot - User Guide
+# 🚀 Jupiter Arbitrage Bot
 
-## 📋 Table of Contents
-- [What is This Bot?](#what-is-this-bot)
-- [System Requirements](#system-requirements)
-- [Quick Start Guide](#quick-start-guide)
-- [Configuration](#configuration)
-- [Using the Bot](#using-the-bot)
-- [Understanding Results](#understanding-results)
-- [Fees & Payments](#fees--payments)
-- [Troubleshooting](#troubleshooting)
-- [Important Warnings](#important-warnings)
-- [FAQ](#faq)
+An automated Solana arbitrage trading bot that scans for profitable trading opportunities across Jupiter Exchange routes.
 
----
+## ⚡ Quick Start
 
-## 🤖 What is This Bot?
+### Requirements
 
-The **Solana Arbitrage Bot** automatically finds and executes profitable trading opportunities on the Solana blockchain using Jupiter Exchange. It:
+- **Linux** (Ubuntu, Debian, or similar)
+- **Node.js 16+** ([Download here](https://nodejs.org/))
+- **Solana wallet** with some SOL for trading
 
-- ✅ Scans for price differences between token pairs every **60 seconds**
-- ✅ Automatically executes profitable trades when found
-- ✅ Shows detailed reports of all opportunities
-- ✅ Manages your wallet and transactions safely
-- ✅ Pays a 10% developer fee on profits
+### Installation
 
-**How Arbitrage Works:**
-1. Bot buys Token B with SOL at a low price
-2. Bot sells Token B back to SOL at a higher price
-3. You profit from the price difference (minus fees)
+1. **Extract the package:**
+   ```bash
+   tar -xzf jupiter-arb-bot_*.tar.gz
+   cd jupiter-arb-bot
+   ```
 
----
+2. **Make the script executable:**
+   ```bash
+   chmod +x jupiter-arb-bot.sh
+   ```
 
-## 💻 System Requirements
+3. **Run the bot:**
+   ```bash
+   ./jupiter-arb-bot.sh
+   ```
 
-### Minimum Requirements:
-- **Operating System:** Linux (Ubuntu, Debian, etc.) or macOS
-- **Node.js:** Version 18 or higher
-- **RAM:** 2GB minimum
-- **Internet:** Stable connection required
-- **Solana Wallet:** With SOL balance for trading
-
-### Recommended:
-- **Node.js:** Version 20+
-- **RAM:** 4GB+
-- **SOL Balance:** At least 0.5 SOL (for trading + fees)
-
-### Check Your Node.js Version:
-```bash
-node --version
-```
-
-If you need to install/upgrade Node.js:
-```bash
-# Using nvm (recommended)
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-nvm install 20
-nvm use 20
-```
+That's it! No dependencies to install - everything is bundled.
 
 ---
 
-## 🚀 Quick Start Guide
+## 🎯 First-Time Setup
 
-### Step 1: Download the Bot
-You should have received a file named `arb-bot` (Linux/Mac) or `arb-bot.exe` (Windows)
+When you run the bot for the first time, you'll be guided through a setup wizard:
 
-### Step 2: Make it Executable (Linux/Mac only)
-```bash
-chmod +x jupiter-arb-bot.sh
-```
+### 1. **RPC URL**
+   - Default: `https://api.mainnet-beta.solana.com` (free, rate-limited)
+   - **Recommended:** Use a dedicated RPC provider for better performance:
+     - [Helius](https://helius.dev/) - Free tier available
+     - [QuickNode](https://www.quicknode.com/) - Paid
+     - [Alchemy](https://www.alchemy.com/) - Free tier available
 
-### Step 3: Run the Bot
-```bash
-./jupiter-arb-bot.sh
-```
+### 2. **Private Key**
+   - Your Solana wallet private key in **base58 format**
+   - ⚠️ **SECURITY WARNING:** Never share your private key!
+   - The key will be stored in `config.json` (keep this file secure)
 
-### Step 4: First Time Setup Wizard
-On first run, you'll be asked to configure:
+   **How to get your private key:**
+   - **Phantom:** Settings → Export Private Key
+   - **Solflare:** Settings → Export Wallet → Show Private Key
+   - **Solana CLI:** `solana-keygen recover` or check your keypair file
 
-1. **RPC URL** - Your Solana node connection
-   - Default: `https://api.mainnet-beta.solana.com` (Free, but slow)
-   - Recommended: Get a paid RPC from [Helius](https://helius.dev) or [QuickNode](https://quicknode.com)
-
-2. **Private Key** - Your wallet's private key (base58 format)
-   - ⚠️ **NEVER SHARE THIS WITH ANYONE!**
-   - Get from Phantom: Settings → Show Private Key
-   - Get from Solflare: Settings → Export Private Key
-
-3. **Minimum Profit Percentage** - Smallest profit to execute
+### 3. **Minimum Profit Percentage**
    - Default: `1.0` (1%)
-   - Lower = more trades, but smaller profits
-   - Higher = fewer trades, but bigger profits
+   - The bot only executes trades with profit above this threshold
+   - **Recommendation:** Start with 0.5-1% for mainnet
 
-4. **Trade Amount** - How much SOL per trade
+### 4. **Trade Amount**
    - Default: `0.1` SOL
-   - Start small to test!
-   - ⚠️ You need 2-3x this amount in wallet for fees
+   - Amount to use per arbitrage cycle
+   - **Recommendation:** Start with 0.01-0.1 SOL for testing
 
-5. **Slippage Tolerance** - Price movement tolerance
+### 5. **Slippage Tolerance**
    - Default: `50` (0.5%)
-   - Higher = more likely to execute, but less profit
-   - Lower = more likely to fail, but more profit
+   - Higher = more trades execute but potentially less profit
+   - Lower = fewer trades but better prices
+   - **Recommendation:** 50-100 (0.5%-1%) for volatile markets
 
 ---
 
-## ⚙️ Configuration
+## 📋 Main Menu Options
 
-### Understanding Settings:
+After setup, you'll see the main menu:
 
-| Setting | What it Does | Recommended Value |
-|---------|--------------|-------------------|
-| **RPC URL** | Connection to Solana network | Paid RPC (Helius/QuickNode) |
-| **Min Profit %** | Minimum profit to trade | 0.5% - 2.0% |
-| **Trade Amount** | SOL per arbitrage | 0.05 - 0.5 SOL |
-| **Slippage** | Max price change allowed | 50-100 (0.5%-1.0%) |
+### 🚀 **Start Arbitrage Bot**
+- Continuously scans for profitable opportunities
+- Automatically executes profitable trades
+- Runs until you press `Ctrl+C`
 
-### Configuration File Location:
-Your settings are saved in: `config.json` (in the same folder as the bot)
+### 🔍 **Scan for Opportunities**
+- One-time scan without executing trades
+- Shows all potential arbitrage paths
+- Useful for testing settings
 
-### Changing Settings:
-1. Run the bot: `./jupiter-arb-bot.sh`
-2. Choose: `⚙️ Reconfigure Settings`
-3. Enter new values
+### 💼 **Check Wallet Balance**
+- Displays your current SOL balance
+- Helpful for monitoring profits
 
----
+### ⚙️ **Reconfigure Settings**
+- Change RPC URL, trade amount, slippage, etc.
+- Updates saved to `config.json`
 
-## 📊 Using the Bot
-
-### Main Menu Options:
-
-1. **🚀 Start Arbitrage Bot**
-   - Begins automatic scanning and trading
-   - Scans every 60 seconds
-   - Press `Ctrl+C` to stop safely
-
-2. **🔍 Scan for Opportunities**
-   - One-time scan (no trading)
-   - Shows current profitable opportunities
-   - Good for testing settings
-
-3. **💼 Check Wallet Balance**
-   - Shows your current SOL balance
-   - Helps monitor profits
-
-4. **⚙️ Reconfigure Settings**
-   - Change bot parameters
-   - No restart needed
-
-5. **🚪 Exit**
-   - Safely close the bot
-
-### Running the Bot:
-
-```bash
-./jupiter-arb-bot.sh
-```
-
-Choose option 1: `🚀 Start Arbitrage Bot`
-
-You'll see:
-```
-🔍 Scan #1 - 2024-01-15 10:30:45
-================================================================================
-
-📊 Scanning 50 tokens for arbitrage...
-
-⏳ Progress: 50/50 pairs (100%) - Checking SOL↔USDC...
-
-📈 Detailed Scan Results:
-[Table showing all trades checked]
-
-💡 Found 3 profitable opportunities!
-
-⚡ Executing best opportunity (#1)...
-```
+### 🚪 **Exit**
+- Safely close the bot
 
 ---
 
-## 📈 Understanding Results
+## 📊 Understanding the Output
 
-### Scan Results Table:
+### Scan Results Table
 
 ```
-┌──────────────────┬──────────────────┬──────────────────┬──────────────┬────────────────┬────────────┬────────────┐
-│ Trade Path       │ Buy Price        │ Sell Price       │ Final Amount │ Profit/Loss    │ Profit %   │ Status     │
-├──────────────────┼──────────────────┼──────────────────┼──────────────┼────────────────┼────────────┼────────────┤
-│ SOL→USDC→SOL     │ 102.456 USDC     │ 0.1025 SOL       │ 0.1025 SOL   │ +0.0025 SOL    │ +2.5%      │ ✅ PROFIT  │
-│ SOL→JUP→SOL      │ 45.678 JUP       │ 0.0995 SOL       │ 0.0995 SOL   │ -0.0005 SOL    │ -0.5%      │ ❌ LOSS    │
-└──────────────────┴──────────────────┴──────────────────┴──────────────┴────────────────┴────────────┴────────────┘
+┌─────────────────┬────────────┬─────────────┬──────────┬────────────┐
+│ Trade Path      │ Buy Price  │ Sell Price  │ Profit   │ Status     │
+├─────────────────┼────────────┼─────────────┼──────────┼────────────┤
+│ SOL→USDC→SOL    │ 1000 USDC  │ 1.015 SOL   │ +0.015   │ ✅ PROFIT  │
+│ SOL→JUP→SOL     │ 50 JUP     │ 0.998 SOL   │ -0.002   │ ❌ LOSS    │
+└─────────────────┴────────────┴─────────────┴──────────┴────────────┘
 ```
 
-### Status Meanings:
-
-- **✅ PROFIT** - Meets your minimum profit threshold, will be executed
-- **⚠️ Low Gain** - Profitable but below minimum threshold
-- **❌ LOSS** - Would lose money, skipped
+- **✅ PROFIT** - Exceeds minimum profit threshold
+- **⚠️ Low Gain** - Positive but below threshold
+- **❌ LOSS** - Would lose money
 - **❌ Failed** - No trading route available
 
-### When a Trade Executes:
+### Trade Execution
 
 ```
-⚡ Executing best opportunity (#1)...
+Step 1/2: Swapping SOL → USDC
+✓ Swap 1/2 complete: AbC123...
 
-┌────────────────────┬─────────────────────────────────────┐
-│ Step               │ Details                             │
-├────────────────────┼─────────────────────────────────────┤
-│ Trade Path         │ SOL → USDC → SOL                    │
-│ Initial Amount     │ 0.1 SOL                             │
-│ Expected Profit    │ +0.0025 SOL (2.5%)                  │
-│ Developer Fee      │ 0.00025 SOL (10%)                   │
-│ Net Profit         │ +0.00225 SOL                        │
-└────────────────────┴─────────────────────────────────────┘
-
-✓ Swap 1/2 complete: ABC123...
-✓ Swap 2/2 complete: DEF456...
+Step 2/2: Swapping USDC → SOL
+✓ Swap 2/2 complete: DeF456...
 
 🎉 ARBITRAGE COMPLETE!
-💰 Your Net Profit: 0.00225 SOL
+💰 Your Net Profit: 0.0135 SOL
 ```
 
 ---
 
-## 💰 Fees & Payments
+## ⚙️ Configuration File
 
-### Fee Structure:
+Settings are stored in `config.json`:
 
-1. **Developer Fee: 10%** of your profit
-   - Automatically sent after successful trades
-   - Only charged on profitable trades
-   - Example: Profit 0.01 SOL → Fee 0.001 SOL → You keep 0.009 SOL
-
-2. **Network Fees (Gas):**
-   - Charged by Solana blockchain
-   - Usually 0.00001-0.0001 SOL per transaction
-   - Paid from your wallet balance
-
-3. **Jupiter Swap Fees:**
-   - Included in slippage tolerance
-   - Typically very small (0.1-0.3%)
-
-### Fee Wallet:
-```
-G6mVPjapHtHRKWucLbwhcJHKJHG6FVi5yhpm6wJGWYC9
+```json
+{
+  "rpcUrl": "https://api.mainnet-beta.solana.com",
+  "privateKey": "your_private_key_here",
+  "minProfitPercentage": 1.0,
+  "tradeAmount": 0.1,
+  "slippage": 50
+}
 ```
 
-All developer fees are sent here automatically.
-
-### Example Calculation:
-```
-Starting SOL: 0.1000
-After Trade:  0.1030 (+0.0030 profit)
-Developer Fee: 0.0003 (10% of profit)
-Network Fees:  0.0001
-Your Balance: 0.1026 SOL (+0.0026 net profit)
-```
+You can edit this file directly or use the "Reconfigure Settings" menu option.
 
 ---
 
-## 🔧 Troubleshooting
+## 💰 Fees & Costs
 
-### Bot Won't Start
+### Transaction Fees
+- **Solana network fees:** ~0.000005 SOL per transaction
+- **Each arbitrage cycle:** 2 transactions (~0.00001 SOL total)
 
-**Problem:** Permission denied
-```bash
-# Solution:
-chmod +x jupiter-arb-bot.sh
-```
+### Developer Fee
+- **Current rate:** 0% (disabled in this version)
+- **Infrastructure present:** Code can collect 10% of profits if enabled
+- **Wallet address:** `G6mVPjapHtHRKWucLbwhcJHKJHG6FVi5yhpm6wJGWYC9`
 
-**Problem:** Node.js version error
-```bash
-# Check version:
-node --version
+⚠️ **Note:** While the fee is currently set to 0%, the code infrastructure exists. Review the code if concerned.
 
-# If below v18, upgrade:
-nvm install 20
-nvm use 20
-```
+---
 
-### No Opportunities Found
+## 🛡️ Security Best Practices
 
-**Possible Causes:**
-1. ✅ **Min Profit % too high** - Try lowering to 0.5%
-2. ✅ **Bad market conditions** - Wait for more volatility
-3. ✅ **Poor RPC connection** - Upgrade to paid RPC
+### 🔐 Protect Your Private Key
+- **NEVER** share your private key with anyone
+- Keep `config.json` secure and backed up
+- Consider using a dedicated trading wallet with limited funds
+
+### 💵 Start Small
+- Test with **0.01-0.1 SOL** first
+- Verify profitability before scaling up
+- Monitor the first 10-20 trades closely
+
+### 🌐 Use Quality RPC
+- Free public RPCs are slow and rate-limited
+- Dedicated RPC providers offer:
+  - Faster transaction processing
+  - Better success rates
+  - No rate limits
+
+### 📊 Monitor Performance
+- Check your wallet balance regularly
+- Review transaction history on [Solscan](https://solscan.io/)
+- Track profit/loss over time
+
+---
+
+## ❗ Troubleshooting
+
+### "❌ Node.js is not installed"
 
 **Solution:**
 ```bash
-# Lower minimum profit percentage
-./jupiter-arb-bot.sh → Reconfigure Settings → Min Profit: 0.5
+# Ubuntu/Debian
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+# Verify installation
+node --version
 ```
 
-### Trades Failing
+### "❌ Node.js 16+ required"
 
-**Problem:** "Slippage exceeded"
+**Solution:** Update Node.js to version 16 or higher using the commands above.
+
+### "❌ Error: dist/bot.js not found"
+
+**Solution:**
 ```bash
-# Increase slippage tolerance:
-./jupiter-arb-bot.sh → Reconfigure Settings → Slippage: 100 (1.0%)
+# Ensure you extracted the full archive
+tar -xzf jupiter-arb-bot_*.tar.gz
+
+# Check files exist
+ls -la jupiter-arb-bot.sh dist/bot.js
 ```
 
-**Problem:** "Insufficient SOL balance"
-```bash
-# You need more SOL in wallet
-# Minimum: 3x your trade amount
-# Example: 0.1 SOL trade = need 0.3 SOL total
-```
+### "⚠️ No profitable opportunities found"
 
-**Problem:** "Transaction timeout"
-```bash
-# Your RPC is too slow
-# Get faster RPC from Helius or QuickNode
-```
-
-### Slow Performance
-
-**Issue:** Scans taking too long
+**Possible causes:**
+- Market conditions aren't favorable
+- `minProfitPercentage` is set too high
+- `slippage` tolerance is too low
+- RPC is slow (causing stale data)
 
 **Solutions:**
-1. ✅ Use a paid RPC (Helius, QuickNode)
-2. ✅ Reduce trade amount to scan faster
-3. ✅ Better internet connection
+- Lower `minProfitPercentage` to 0.3-0.5%
+- Increase `slippage` to 100 (1%)
+- Switch to a faster RPC provider
+- Wait for better market conditions
+
+### Trades fail frequently
+
+**Possible causes:**
+- Network congestion
+- Prices moving too fast
+- Insufficient SOL for fees
+
+**Solutions:**
+- Increase slippage tolerance
+- Use a faster RPC
+- Ensure you have at least 0.5 SOL in your wallet
+
+### "Failed to fetch tokens"
+
+**Cause:** Jupiter API timeout or rate limiting
+
+**Solution:**
+- Check internet connection
+- Wait 30 seconds and try again
+- Bot falls back to 4 major tokens (SOL, USDC, USDT, JUP)
 
 ---
 
-## ⚠️ Important Warnings
+## 📈 Tips for Success
 
-### 🔐 Security:
+### 1. **Optimize Settings**
+   - Start conservative: 1% profit, 0.1 SOL trades
+   - Gradually adjust based on results
+   - Higher trade amounts = higher absolute profits (but higher risk)
 
-- ❌ **NEVER share your private key with anyone**
-- ❌ **NEVER run this bot on untrusted computers**
-- ❌ **NEVER share your config.json file**
-- ✅ **Always keep your private key secret**
-- ✅ **Use a dedicated trading wallet (not your main wallet)**
+### 2. **Choose the Right Time**
+   - High volatility = more opportunities
+   - Major news events often create arbitrage chances
+   - Avoid extreme gas fee periods
 
-### 💸 Financial Risks:
+### 3. **Monitor & Adjust**
+   - Review first 20 trades carefully
+   - Calculate your actual profit rate
+   - Adjust `minProfitPercentage` based on success rate
 
-- ⚠️ **Trading is risky** - You can lose money
-- ⚠️ **Start small** - Test with 0.05-0.1 SOL
-- ⚠️ **Never invest more than you can afford to lose**
-- ⚠️ **Market conditions change** - Profits are not guaranteed
-- ⚠️ **Network fees** - Even failed trades cost gas
+### 4. **Risk Management**
+   - Never invest more than you can afford to lose
+   - Keep most funds in a separate wallet
+   - Set a daily loss limit for yourself
 
-### 🤖 Bot Limitations:
-
-- Bot scans every **60 seconds** (not instant)
-- Other bots may be faster and take opportunities first
-- High gas fees during network congestion
-- Not all token pairs have arbitrage opportunities
-- Slippage can reduce profits
-
----
-
-## ❓ FAQ
-
-### Q: How much money can I make?
-
-**A:** It varies greatly based on:
-- Market volatility (more = better)
-- Your trade amount (larger = more profit per trade)
-- Your settings (lower min profit = more trades)
-- Network speed (faster RPC = better execution)
-
-Realistic expectations: 0.5% - 5% profit per successful trade
-
-### Q: How often does it find opportunities?
-
-**A:** Depends on market conditions:
-- Bull markets: Multiple per hour
-- Bear markets: Few per day
-- Typical: 5-20 per day with 1% minimum profit
-
-### Q: Can I run it 24/7?
-
-**A:** Yes! Use `screen` or `tmux`:
-```bash
-# Start a screen session
-screen -S arbitrage
-
-# Run bot
-./arb-bot
-
-# Detach: Press Ctrl+A then D
-# Reattach later: screen -r arbitrage
-```
-
-### Q: What if I lose money?
-
-**A:** The bot only executes trades above your minimum profit threshold, but:
-- Slippage can reduce profits
-- Network fees are unavoidable
-- Failed trades still cost gas
-- Start small and test thoroughly
-
-### Q: Can I change settings while running?
-
-**A:** No, you must:
-1. Stop the bot (Ctrl+C)
-2. Restart: `./arb-bot`
-3. Choose "Reconfigure Settings"
-4. Restart bot
-
-### Q: How do I stop the bot?
-
-**A:** Press `Ctrl+C` - it will stop safely after current scan
-
-### Q: What tokens does it trade?
-
-**A:** The bot scans the top 50 verified tokens from Jupiter, including:
-- SOL/USDC
-- SOL/USDT
-- SOL/JUP
-- And many more popular pairs
-
-### Q: Do I need to keep my computer on?
-
-**A:** Yes, the bot must run continuously. Consider:
-- Cloud VPS (DigitalOcean, AWS, Linode)
-- Raspberry Pi
-- Old laptop/computer
-
-### Q: What's the best RPC provider?
-
-**A:**
-1. **Helius** - Fast, reliable, generous free tier
-2. **QuickNode** - Professional, very fast
-3. **Alchemy** - Good balance of speed/price
-
-Free RPC works but is slow and may miss opportunities.
-
-### Q: How do I update the bot?
-
-**A:** You'll receive a new binary file. Simply:
-1. Stop old bot (Ctrl+C)
-2. Replace `arb-bot` file
-3. Run new version: `./arb-bot`
-
-Your config.json settings are preserved.
+### 5. **Use Quality Infrastructure**
+   - Dedicated RPC = faster execution = better profits
+   - Good internet connection is critical
+   - Consider running on a VPS for 24/7 operation
 
 ---
 
-## 📞 Support
+## 🚨 Important Warnings
 
-### Getting Help:
+⚠️ **TRADING RISKS:**
+- Arbitrage is **NOT guaranteed profit**
+- You can **LOSE MONEY** due to:
+  - Slippage exceeding profit margins
+  - Failed transactions (you still pay fees)
+  - Market volatility
+  - Network congestion
+  - Smart contract risks
 
-1. **Read this guide thoroughly**
-2. **Check Troubleshooting section**
-3. **Contact your bot provider**
+⚠️ **SECURITY RISKS:**
+- Your private key is stored in plain text
+- Obfuscation does NOT provide complete security
+- Anyone with access to your machine can extract keys
+- Code contains fee collection infrastructure (currently disabled)
 
-### Useful Links:
-
-- **Jupiter Exchange:** https://jup.ag
-- **Solana Explorer:** https://solscan.io
-- **Helius RPC:** https://helius.dev
-- **QuickNode RPC:** https://quicknode.com
-
----
-
-## 📝 Quick Reference Card
-
-```
-START BOT:        ./arb-bot
-STOP BOT:         Ctrl+C
-CONFIG FILE:      config.json
-SCAN INTERVAL:    60 seconds
-DEVELOPER FEE:    10% of profits
-MIN SOL NEEDED:   0.3 SOL (for 0.1 SOL trades)
-
-RECOMMENDED SETTINGS:
-- Min Profit: 0.5% - 2.0%
-- Trade Amount: 0.05 - 0.2 SOL
-- Slippage: 50-100 (0.5%-1.0%)
-- RPC: Paid provider (Helius/QuickNode)
-```
+⚠️ **NO WARRANTY:**
+- This software is provided "as is"
+- No guarantees of profitability
+- Use at your own risk
+- Always test with small amounts first
 
 ---
 
-## 🎯 Best Practices
+## 📞 Support & Resources
 
-1. ✅ **Start with small amounts** (0.05-0.1 SOL)
-2. ✅ **Use a dedicated trading wallet**
-3. ✅ **Monitor first 24 hours closely**
-4. ✅ **Use paid RPC for best results**
-5. ✅ **Keep SOL balance 3x your trade amount**
-6. ✅ **Lower min profit % for more trades**
-7. ✅ **Check results daily**
-8. ✅ **Withdraw profits regularly**
+### Learn More
+- **Solana Docs:** https://docs.solana.com/
+- **Jupiter Exchange:** https://jup.ag/
+- **Arbitrage Strategy:** Research MEV and arbitrage trading
+
+### Tools
+- **Solscan:** https://solscan.io/ (Track transactions)
+- **Jupiter Analytics:** https://jup.ag/stats (Market data)
+- **Birdeye:** https://birdeye.so/ (Token prices)
+
+### Community
+- Solana Discord
+- Jupiter Discord
+- DeFi/MEV research forums
 
 ---
 
-**🚀 Happy Trading! May your arbitrages be profitable!**
+## 📜 Version Information
 
-*Last Updated: January 2025*
-*Bot Version: 1.0*
+- **Version:** 1.0
+- **Build Type:** Standalone (all dependencies bundled)
+- **Platform:** Linux
+- **Node.js Required:** 16+
+
+---
+
+## 🎓 How It Works
+
+### Arbitrage Strategy
+
+The bot implements **triangular arbitrage** on Solana:
+
+1. **Scan Phase:**
+   - Fetches verified token list from Jupiter
+   - Checks prices for SOL → Token → SOL paths
+   - Calculates potential profit for each route
+
+2. **Execution Phase:**
+   - If profit > minimum threshold:
+     - Swap SOL for Token (Trade 1)
+     - Swap Token back to SOL (Trade 2)
+     - Net result: More SOL than you started with
+
+3. **Example:**
+   ```
+   Start: 1.0 SOL
+   Trade 1: 1.0 SOL → 100 USDC
+   Trade 2: 100 USDC → 1.015 SOL
+   Profit: 0.015 SOL (1.5%)
+   ```
+
+### Why Opportunities Exist
+
+- Price differences between DEX aggregators
+- Temporary liquidity imbalances
+- High volatility creating mispricings
+- New token listings
+- Large market orders causing slippage
+
+---
+
+## 📝 License
+
+This software is provided for educational and research purposes.
+
+**Disclaimer:** Cryptocurrency trading involves substantial risk of loss. The developers are not responsible for any financial losses incurred through the use of this bot.
+
+---
+
+## 🔄 Updates
+
+To update the bot:
+1. Download the latest release
+2. Extract to a new directory
+3. Copy your `config.json` from the old version
+4. Run the new version
+
+**Note:** Always backup your `config.json` before updating.
+
+---
+
+**Ready to start?** Run `./jupiter-arb-bot.sh` and follow the setup wizard!
+
+Good luck, and trade responsibly! 🚀

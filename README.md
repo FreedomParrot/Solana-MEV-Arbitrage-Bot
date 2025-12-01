@@ -70,12 +70,20 @@ If you received the pre-built bot:
 unzip jupiter-arb-bot.zip
 cd jupiter-arb-bot
 
-# 2. Make launcher executable
+# 2. Verify you have both required files
+ls -la dist/
+# You should see:
+#   - bot.js (main executable)
+#   - fonts/ (directory with .flf font files)
+
+# 3. Make launcher executable
 chmod +x launch.sh
 
-# 3. Run the bot
+# 4. Run the bot
 ./launch.sh
 ```
+
+**⚠️ IMPORTANT:** The bot requires the `dist/fonts/` directory to be present alongside `dist/bot.js`. Do not delete the fonts folder!
 
 ### Option 2: Build from Source
 

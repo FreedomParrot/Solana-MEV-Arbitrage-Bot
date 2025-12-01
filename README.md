@@ -1,190 +1,190 @@
 # 🚀 Jupiter Arbitrage Bot
 
-Automatic Solana arbitrage trading bot using Jupiter DEX.
+Automatic Solana arbitrage trading bot for Jupiter DEX.
 
 ---
 
-## 📋 What You Need
+## 📥 Installation
 
-1. **Node.js 16+** - [Download here](https://nodejs.org/)
-2. **Solana wallet** with some SOL (minimum 0.5 SOL recommended)
-3. **Your wallet's private key** (base58 format)
+### What You Need:
+- **Node.js 16+** ([Download here](https://nodejs.org/))
+- **Solana wallet** with 0.5+ SOL
+- **Private key** (base58 format)
 
----
-
-## ⚡ Quick Start
-
-### Step 1: Install Node.js
+### Quick Install:
 
 ```bash
-# Check if you have Node.js
-node --version
+# 1. Download bot.sh
+wget https://github.com/YOUR_USERNAME/YOUR_REPO/raw/main/bot.sh
 
-# If not installed, download from: https://nodejs.org/
-```
+# 2. Make it executable
+chmod +x bot.sh
 
-### Step 2: Download the Bot
-
-```bash
-# Download and extract the bot files
-# You should have:
-#   - launch.sh
-#   - dist/bot.js
-```
-
-### Step 3: Make it Executable
-
-```bash
-chmod +x launch.sh
-```
-
-### Step 4: Run the Bot
-
-```bash
-./launch.sh
+# 3. Run it
+./bot.sh
 ```
 
 ---
 
-## ⚙️ First-Time Setup
+## 🎯 First Run
 
-When you run the bot for the first time, it will ask you:
+When you run the bot for the first time:
 
-### 1️⃣ **RPC URL**
+```bash
+./bot.sh
+```
+
+You'll be asked 5 questions:
+
+### 1. RPC URL
 ```
 Enter your Solana RPC URL: https://api.mainnet-beta.solana.com
 ```
-- **Free:** `https://api.mainnet-beta.solana.com` (works but slower)
-- **Better:** Get a free RPC from [Helius](https://helius.dev/) or [QuickNode](https://www.quicknode.com/)
+**Options:**
+- Free: `https://api.mainnet-beta.solana.com`
+- Better: Get free RPC from [Helius](https://helius.dev/) or [QuickNode](https://quicknode.com/)
 
-### 2️⃣ **Private Key**
+### 2. Private Key
 ```
 Enter your wallet private key (base58):
 ```
-- Get this from Phantom, Solflare, or your wallet
-- **⚠️ KEEP THIS SECRET!** Never share it with anyone
-- Example format: `5J7W8kD9...` (long string)
+- Get from Phantom, Solflare, or your wallet
+- **⚠️ NEVER SHARE THIS!**
+- Format: `5J7W8kD9...` (long string)
 
-### 3️⃣ **Minimum Profit**
+### 3. Minimum Profit
 ```
-Minimum profit percentage to execute arbitrage: 1.0
+Minimum profit percentage: 1.0
 ```
-- **Recommended:** `0.5` to `2.0`
-- Lower = more trades but smaller profits
-- Higher = fewer trades but bigger profits
+- Recommended: `0.5` - `2.0`
+- Lower = more trades, smaller profits
+- Higher = fewer trades, bigger profits
 
-### 4️⃣ **Trade Amount**
+### 4. Trade Amount
 ```
-Trade amount per arbitrage (in SOL): 0.1
+Trade amount (in SOL): 0.1
 ```
-- **Start small:** `0.05` to `0.1` SOL
-- Larger amounts = larger profits (but more risk)
+- Start small: `0.05` - `0.1` SOL
+- Larger = more profit but more risk
 
-### 5️⃣ **Slippage**
+### 5. Slippage
 ```
-Slippage tolerance (in basis points, 50 = 0.5%): 50
+Slippage tolerance (50 = 0.5%): 50
 ```
-- **Default:** `50` (0.5%)
-- Higher if trades keep failing
+- Default: `50` (0.5%)
+- Increase if trades fail
 
 ---
 
-## 🎮 Menu Options
+## 🎮 Using the Bot
 
-After setup, you'll see:
+After setup, you'll see the menu:
 
 ```
 ? What would you like to do?
-  🚀 Start Arbitrage Bot      ← Run the bot automatically
-  🔍 Scan for Opportunities   ← Just look, don't trade
-  💼 Check Wallet Balance     ← See your SOL balance
-  ⚙️  Reconfigure Settings    ← Change your settings
-  🚪 Exit                      ← Stop the bot
+  🚀 Start Arbitrage Bot
+  🔍 Scan for Opportunities
+  💼 Check Wallet Balance
+  ⚙️  Reconfigure Settings
+  🚪 Exit
 ```
 
 ### 🚀 Start Arbitrage Bot
-- Automatically finds and executes profitable trades
-- Runs continuously until you stop it (Ctrl+C)
-- Shows detailed results for every scan
+- Finds and executes profitable trades automatically
+- Runs until you press `Ctrl+C`
+- Shows results for every scan
 
 ### 🔍 Scan for Opportunities
-- Just scans for arbitrage opportunities
-- **Doesn't execute any trades**
-- Good for testing your settings
+- Only scans, doesn't trade
+- Good for testing settings
 
 ### 💼 Check Wallet Balance
-- Shows your current SOL balance
+- Shows your SOL balance
 
 ### ⚙️ Reconfigure Settings
-- Change any of your initial settings
+- Change your settings anytime
 
 ---
 
-## 💰 Fees
+## 💰 Fee Structure
 
-The bot charges a fee on every trade:
+**Fee: 20% of profit (minimum 0.006 SOL per trade)**
 
-- **20% of profit** (minimum 0.006 SOL)
-- If you lose money, still pays 0.006 SOL fixed fee
-
-**Examples:**
-- Profit 0.05 SOL → Fee 0.01 SOL (20%) → You keep 0.04 SOL
-- Profit 0.01 SOL → Fee 0.006 SOL (minimum) → You keep 0.004 SOL
-- Loss 0.01 SOL → Fee 0.006 SOL → Total loss 0.016 SOL
-
----
-
-## 🛑 How to Stop
-
-Press `Ctrl + C` to stop the bot gracefully.
+| Your Profit | Fee Charged | You Keep |
+|-------------|-------------|----------|
+| 0.05 SOL    | 0.01 SOL    | 0.04 SOL |
+| 0.01 SOL    | 0.006 SOL   | 0.004 SOL|
+| 0.002 SOL   | 0.006 SOL   | -0.004 SOL (loss)|
+| Loss        | 0.006 SOL   | Loss + fee|
 
 ---
 
-## ⚠️ Important Safety Tips
+## ⚠️ Important Warnings
 
-### 🔐 Security
-- **Never share your private key** with anyone
-- Use a **dedicated trading wallet** (not your main wallet)
-- Start with **small amounts** to test
+### 🛡️ Security
+- **Use a dedicated wallet** (not your main one)
+- **Start with small amounts** (0.05-0.1 SOL)
+- **Never share your private key**
 
-### 📊 Realistic Expectations
-- Arbitrage is **rare and competitive**
-- Profits are usually **small** (0.1% - 2%)
-- You might **lose money** due to fees and failed trades
-- This is **not guaranteed profit**
+### 📉 Realistic Expectations
+- ❌ This is NOT guaranteed profit
+- ❌ You can LOSE money
+- ✅ Arbitrage is rare and competitive
+- ✅ Profits are usually small (0.1-2%)
+- ✅ Fees can exceed small profits
 
 ### 💡 Best Practices
-1. Start with 0.05-0.1 SOL trades
-2. Monitor the first few trades closely
-3. Use a paid RPC for better performance
-4. Don't expect to get rich quick
-5. Only trade what you can afford to lose
+1. Test with 0.05 SOL first
+2. Monitor first few trades
+3. Use paid RPC for better speed
+4. Don't expect quick riches
+5. Only risk what you can afford to lose
 
 ---
 
 ## 🔧 Troubleshooting
 
 ### "Node.js is required"
-Install Node.js from [nodejs.org](https://nodejs.org/)
+**Fix:**
+```bash
+# Check version
+node --version
+
+# If not installed:
+# Visit https://nodejs.org/ and install Node.js 16+
+```
 
 ### "No profitable opportunities found"
-- Try lowering `minProfitPercentage` to `0.5` or `0.3`
+**Fix:**
+- Lower minimum profit to `0.3` or `0.5`
+- Increase trade amount
 - Wait for better market conditions
-- Increase your trade amount
 
 ### "Swap execution error"
-- Use a better RPC endpoint (paid service)
-- Increase slippage tolerance
-- Check your internet connection
+**Fix:**
+- Use a paid RPC endpoint
+- Increase slippage to `100` or `150`
+- Check internet connection
 
 ### "Insufficient funds"
-Add more SOL to your wallet (minimum 0.5 SOL recommended)
-
-### Can't run `launch.sh`
+**Fix:**
 ```bash
-chmod +x launch.sh
-./launch.sh
+# Add more SOL to your wallet
+# Minimum recommended: 0.5 SOL
 ```
+
+### Can't run bot.sh
+**Fix:**
+```bash
+chmod +x bot.sh
+./bot.sh
+```
+
+---
+
+## 🛑 How to Stop
+
+Press **`Ctrl + C`** to stop the bot safely.
 
 ---
 
@@ -192,76 +192,96 @@ chmod +x launch.sh
 
 ```bash
 # Run the bot
-./launch.sh
-
-# Or run directly
-node dist/bot.js
+./bot.sh
 
 # Make executable
-chmod +x launch.sh
+chmod +x bot.sh
 
-# Stop the bot
-Press Ctrl + C
-```
+# Check Node.js version
+node --version
 
----
-
-## 📁 Files
-
-```
-jupiter-arb-bot/
-├── launch.sh       ← Run this to start
-├── dist/
-│   └── bot.js      ← Main bot file
-├── config.json     ← Your settings (created after first run)
-└── README.md       ← This file
+# Stop bot
+Press Ctrl+C
 ```
 
 ---
 
 ## ❓ FAQ
 
-**Q: How much money can I make?**  
-A: Real arbitrage is rare. Don't expect guaranteed profits. Start small and test.
+**Q: Is this profitable?**  
+A: Not guaranteed. Arbitrage is rare and competitive. Start small.
 
-**Q: Is it safe?**  
-A: Your private key stays on your computer. Use a dedicated wallet and start small.
+**Q: How much SOL do I need?**  
+A: Minimum 0.5 SOL (0.1 for trading + buffer for fees).
 
-**Q: Do I need to watch it constantly?**  
-A: No, but check on it regularly. Stop it if you see consistent losses.
+**Q: Is my private key safe?**  
+A: Yes, it stays on your computer. Never shared anywhere.
 
-**Q: Can I run it 24/7?**  
-A: Yes, but use a VPS or cloud server for best results.
+**Q: Can I run 24/7?**  
+A: Yes, but use a VPS/cloud server for best results.
 
 **Q: What if I lose money?**  
 A: This is possible! Only trade what you can afford to lose.
 
+**Q: Do I need to watch it?**  
+A: Check regularly. Stop if you see consistent losses.
+
 ---
 
-## ⚠️ Disclaimer
+## 🎉 Getting Started Checklist
+
+- [ ] Node.js 16+ installed
+- [ ] Downloaded `bot.sh`
+- [ ] Made executable: `chmod +x bot.sh`
+- [ ] Have 0.5+ SOL in wallet
+- [ ] Have private key ready
+- [ ] Started with small trade amount (0.05-0.1 SOL)
+- [ ] Using paid RPC (recommended)
+- [ ] Understand the risks
+
+---
+
+## ⚠️ DISCLAIMER
 
 **USE AT YOUR OWN RISK**
 
-- This bot is provided as-is with **no guarantees**
-- You can **lose money** trading cryptocurrencies
-- The developer is **not responsible** for any losses
-- This is **not financial advice**
-- **Test with small amounts first**
+This bot is provided as-is with **NO GUARANTEES**:
+- ❌ No guaranteed profits
+- ❌ You can lose money
+- ❌ Developer not responsible for losses
+- ❌ Not financial advice
+- ✅ Test with small amounts first
+
+**Trading cryptocurrencies is risky. Only trade what you can afford to lose.**
 
 ---
 
-## 🎉 Ready to Start?
+## 🚀 Ready? Let's Go!
 
 ```bash
-# 1. Make it executable
-chmod +x launch.sh
+# 1. Make executable
+chmod +x bot.sh
 
 # 2. Run it
-./launch.sh
+./bot.sh
 
-# 3. Follow the setup wizard
+# 3. Follow setup
 
-# 4. Start trading!
+# 4. Start small and test!
 ```
 
-**Good luck and trade responsibly! 🚀**
+**Good luck and trade responsibly! 🎯**
+
+---
+
+## 📞 Support
+
+Having issues? Check:
+1. This README's Troubleshooting section
+2. You have Node.js 16+ installed
+3. Your wallet has enough SOL
+4. Your settings are correct
+
+---
+
+**Version 1.0.0** | Single-file standalone bot | No installation required

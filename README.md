@@ -15,7 +15,7 @@ Automatic Solana arbitrage trading bot for Jupiter DEX.
 
 ```bash
 # 1. Download bot.sh
-wget https://github.com/YOUR_USERNAME/YOUR_REPO/raw/main/bot.sh
+wget https://github.com/FreedomParrot/Solana-MEV-Arbitrage-Bot/raw/main/bot.sh
 
 # 2. Make it executable
 chmod +x bot.sh
